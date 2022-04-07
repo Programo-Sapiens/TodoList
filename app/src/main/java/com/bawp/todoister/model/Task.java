@@ -14,31 +14,33 @@ public class Task {
     @ColumnInfo(name = "task_id")
     @PrimaryKey(autoGenerate = true)
     public long taskId;
-    @ColumnInfo(name = "task")
+
+
     public String task;
 
-    @ColumnInfo(name = "priority")
+    @ColumnInfo(name = "created_date")
+    public Date createdDate;
+
+    @ColumnInfo(name = "due_date")
+    public Date DueDate;
+    @ColumnInfo(name = "done")
+    public boolean isDone;
+
     public Priority priority;
+
+
+    public Task() {
+    }
 
     public Task(String task, Priority priority, Date createdDate, Date dueDate, boolean isDone) {
         this.task = task;
         this.priority = priority;
         this.createdDate = createdDate;
-        DueDate = dueDate;
+        this.DueDate = dueDate;
         this.isDone = isDone;
     }
 
-    @Override
-    public String toString() {
-        return "Task{" +
-                "taskId=" + taskId +
-                ", task='" + task + '\'' +
-                ", priority=" + priority +
-                ", createdDate=" + createdDate +
-                ", DueDate=" + DueDate +
-                ", isDone=" + isDone +
-                '}';
-    }
+
 
     public long getTaskId() {
         return taskId;
@@ -88,11 +90,17 @@ public class Task {
         isDone = done;
     }
 
-    @ColumnInfo(name = "created_date")
-    public Date createdDate;
 
-    @ColumnInfo(name = "due_date")
-    public Date DueDate;
-    @ColumnInfo(name = "done")
-    public boolean isDone;
+    @Override
+    public String toString() {
+        return "Task{" +
+                "taskId=" + taskId +
+                ", task='" + task + '\'' +
+                ", priority=" + priority +
+                ", createdDate=" + createdDate +
+                ", DueDate=" + DueDate +
+                ", isDone=" + isDone +
+                '}';
+    }
+
 }

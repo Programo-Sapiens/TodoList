@@ -10,18 +10,22 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private TaskViewModel taskViewModel;
+    public static final String TAG="ITEM";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,17 @@ public class MainActivity extends AppCompatActivity {
         )
                 .create(TaskViewModel.class);
 
+        taskViewModel.getAllTask().observe(this, new Observer<List<Task>>() {
+            @Override
+            public void onChanged(List<Task> tasks) {
+                for(Task task:tasks){
+                    Log.d(TAG,"messageOncreate"+task.getTask());
+                }
+            }
+        });
+
+      //  Log.v("Task_Database",taskViewModel.allTasks.getValue().toArray().toString());
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
                         false);
                 TaskViewModel.insert(task); //we directly use class to access insert (bcoz insert is static in viewmodel)
                 //but will need instance for data like liveData in viewmodel which are not static
+
+
 
             }
         });

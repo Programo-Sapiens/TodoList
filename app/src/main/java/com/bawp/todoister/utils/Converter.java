@@ -21,7 +21,12 @@ public class Converter {
 
     }
     @TypeConverter
-    public String fromPriority(Priority priority){
+    public static  String fromPriority(Priority priority){
         return priority==null?null:priority.name();
+    }
+
+    @TypeConverter
+    public static  Priority ToPriority(String priority){
+        return priority==null?null:Priority.valueOf(priority);
     }
 }
