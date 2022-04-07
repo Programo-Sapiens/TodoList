@@ -2,6 +2,7 @@ package com.bawp.todoister;
 
 import android.os.Bundle;
 
+import com.bawp.todoister.adapter.Adapter_Todo;
 import com.bawp.todoister.model.Priority;
 import com.bawp.todoister.model.Task;
 import com.bawp.todoister.model.TaskViewModel;
@@ -12,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.View;
@@ -25,6 +28,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private TaskViewModel taskViewModel;
+    private RecyclerView recyclerView;
+    private Adapter_Todo adapterTodo;
+
     public static final String TAG="ITEM";
 
     @Override
@@ -34,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        recyclerView=findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
         taskViewModel =new ViewModelProvider.AndroidViewModelFactory(MainActivity.this.getApplication()
         )
                 .create(TaskViewModel.class);
@@ -41,9 +52,11 @@ public class MainActivity extends AppCompatActivity {
         taskViewModel.getAllTask().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
-                for(Task task:tasks){
-                    Log.d(TAG,"messageOncreate"+task.getTask());
-                }
+//                for(Task task:tasks){
+//                    Log.d(TAG,"messageOncreate"+task.getTask());
+//                }
+                adapterTodo=new Adapter_Todo(tasks);
+                recyclerView.setAdapter(adapterTodo);
             }
         });
 
