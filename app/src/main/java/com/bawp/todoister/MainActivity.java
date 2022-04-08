@@ -6,11 +6,13 @@ import com.bawp.todoister.adapter.Adapter_Todo;
 import com.bawp.todoister.model.Priority;
 import com.bawp.todoister.model.Task;
 import com.bawp.todoister.model.TaskViewModel;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private Adapter_Todo adapterTodo;
 
     public static final String TAG="ITEM";
-
+    BottomSheetFragment bottomSheetFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView=findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+bottomSheetFragment=new BottomSheetFragment();
+ConstraintLayout constraintLayout=findViewById(R.id.bottomSheet);
+BottomSheetBehavior<ConstraintLayout> bottomSheetBehavior=BottomSheetBehavior.from(constraintLayout);
+bottomSheetBehavior.setPeekHeight(BottomSheetBehavior.STATE_HIDDEN);
 
 
         taskViewModel =new ViewModelProvider.AndroidViewModelFactory(MainActivity.this.getApplication()
@@ -72,10 +79,15 @@ public class MainActivity extends AppCompatActivity {
                 TaskViewModel.insert(task); //we directly use class to access insert (bcoz insert is static in viewmodel)
                 //but will need instance for data like liveData in viewmodel which are not static
 
-
+//show bottoms sheet
+                showBottomSheet();
 
             }
         });
+    }
+
+    private void showBottomSheet() {
+        bottomSheetFragment.show(getSupportFragmentManager(),bottomSheetFragment.getTag());
     }
 
     @Override

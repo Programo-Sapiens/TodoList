@@ -1,2 +1,4 @@
 include ':app'
-rootProject.name = "Todoister"
+rootProject.name = "TodoList"
+//rootProject.name = "
+// Todoister"
