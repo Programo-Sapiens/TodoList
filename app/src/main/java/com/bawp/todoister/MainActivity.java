@@ -74,9 +74,9 @@ bottomSheetBehavior.setPeekHeight(BottomSheetBehavior.STATE_HIDDEN);
             @Override
             public void onClick(View view) {
                 //can convert it into lamda
-                Task task=new Task("Todo", Priority.HIGH, Calendar.getInstance().getTime(),Calendar.getInstance().getTime(),
-                        false);
-                TaskViewModel.insert(task); //we directly use class to access insert (bcoz insert is static in viewmodel)
+               // Task task=new Task("Todo", Priority.HIGH, Calendar.getInstance().getTime(),Calendar.getInstance().getTime(),
+                        //false);
+               // TaskViewModel.insert(task); //we directly use class to access insert (bcoz insert is static in viewmodel)
                 //but will need instance for data like liveData in viewmodel which are not static
 
 //show bottoms sheet
